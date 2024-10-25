@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Header from "./components/Header";
 
 export default function Home() {
   return (
-    <div>
-      <h1>E commerce</h1>
+    <div className="py-4 px-14">
+      <Header />
     </div>
   );
 }
