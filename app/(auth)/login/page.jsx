@@ -1,11 +1,21 @@
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/lib/firebase";
 import { Button } from "@nextui-org/react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Page() {
+  const { user } = useAuth();
+  const router = useRouter();
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
+    }
+  }, [user]);
   return (
     <main className="w-full flex justify-center items-center bg-gray-300 p-24 min-h-screen">
       <section className="flex flex-col gap-3">
@@ -52,12 +62,19 @@ export default function Page() {
 }
 
 function SignInWithGoogleComponent() {
+  const [isLoading, setIsLoading] = useState(false);
   const handleLogin = async () => {
+    setIsLoading(true);
     try {
       const user = await signInWithPopup(auth, new GoogleAuthProvider());
     } catch (error) {
       toast.error(error?.message);
     }
+    setIsLoading(false);
   };
-  return <Button onClick={handleLogin}>Sign in with Google</Button>;
+  return (
+    <Button isLoading={isLoading} isDisabled={isLoading} onClick={handleLogin}>
+      Sign in with Google
+    </Button>
+  );
 }
