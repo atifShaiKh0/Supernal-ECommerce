@@ -15,6 +15,9 @@ import {
   User,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import toast from "react-hot-toast";
 
 export default function Sidebar() {
   const menuList = [
@@ -71,17 +74,17 @@ export default function Sidebar() {
       </ul>
       <div className="flex justify-center">
         <button
-          //   onClick={async () => {
-          //     try {
-          //       await toast.promise(signOut(auth), {
-          //         error: (e) => e?.message,
-          //         loading: "Loading...",
-          //         success: "Successfully Logged out",
-          //       });
-          //     } catch (error) {
-          //       toast.error(error?.message);
-          //     }
-          //   }}
+          onClick={async () => {
+            try {
+              await toast.promise(signOut(auth), {
+                error: (e) => e?.message,
+                loading: "Logging Out...",
+                success: "Successfully Logged Out",
+              });
+            } catch (error) {
+              toast.error(error?.message);
+            }
+          }}
           className="flex gap-2 items-center px-3 py-2 hover:bg-indigo-100 rounded-xl w-full justify-center ease-soft-spring duration-400 transition-all"
         >
           <LogOut className="h-5 w-5" /> Logout
