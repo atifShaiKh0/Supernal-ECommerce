@@ -1,6 +1,5 @@
 import { db, storage } from "@/lib/firebase";
 import {
-  collection,
   deleteDoc,
   doc,
   setDoc,
@@ -9,56 +8,59 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-export const createNewCategory = async ({ data, image }) => {
+export const createNewAdmin = async ({ data, image }) => {
   if (!image) {
     throw new Error("Image is Required");
   }
   if (!data.name) {
     throw new Error("Name is required");
   }
-  if (!data.slug) {
-    throw new Error("Slug is required");
+  if (!data.email) {
+    throw new Error("Email is required");
   }
-  const newId = doc(collection(db, `ids`)).id;
-  const imageRef = ref(storage, `categories/${newId}`);
+  const newId = data?.email;
+  const imageRef = ref(storage, `admins/${newId}`);
   await uploadBytes(imageRef, image);
   const imageUrl = await getDownloadURL(imageRef);
 
-  await setDoc(doc(db, `categories/${newId}`), {
+  await setDoc(doc(db, `admins/${newId}`), {
     ...data,
     id: newId,
     imageURL: imageUrl,
     timestampCreate: Timestamp.now(),
   });
 };
-export const updateCategory = async ({ data, image }) => {
+export const updateAdmin = async ({ data, image }) => {
   if (!data.name) {
     throw new Error("Name is required");
-  }
-  if (!data.slug) {
-    throw new Error("Slug is required");
   }
   if (!data?.id) {
     throw new Error("Id is required");
   }
+  if (!data?.email) {
+    throw new Error("Email is required");
+  }
   const id = data?.id;
   let imageURL = data?.imageURL;
   if (image) {
-    const imageRef = ref(storage, `categories/${id}`);
+    const imageRef = ref(storage, `admins/${id}`);
     await uploadBytes(imageRef, image);
     imageURL = await getDownloadURL(imageRef);
   }
-
-  await updateDoc(doc(db, `categories/${id}`), {
-    ...data,
-    imageURL: imageURL,
-    timestampUpdate: Timestamp.now(),
-  });
+  if (id === data?.email) {
+    await updateDoc(doc(db, `admins/${id}`), {
+      ...data,
+      imageURL: imageURL,
+      timestampUpdate: Timestamp.now(),
+    });
+  } else {
+    throw new Error("Haha.. You can't change admin's Email");
+  }
 };
 
-export const deleteCategory = async ({ id }) => {
+export const deleteAdmin = async ({ id }) => {
   if (!id) {
     throw new Error("Id is required");
   }
-  await deleteDoc(doc(db, `categories/${id}`));
+  await deleteDoc(doc(db, `admins/${id}`));
 };

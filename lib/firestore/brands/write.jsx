@@ -40,7 +40,7 @@ export const updateBrand = async ({ data, image }) => {
   if (image) {
     const imageRef = ref(storage, `brands/${id}`);
     await uploadBytes(imageRef, image);
-    const imageURL = await getDownloadURL(imageRef);
+    imageURL = await getDownloadURL(imageRef);
   }
 
   await updateDoc(doc(db, `brands/${id}`), {

@@ -1,7 +1,7 @@
 "use client";
 
-import { useBrands } from "@/lib/firestore/brands/read";
-import { deleteBrand } from "@/lib/firestore/brands/write";
+import { useAdmins } from "@/lib/firestore/admins/read";
+import { deleteAdmin } from "@/lib/firestore/admins/write";
 import { Button, CircularProgress } from "@nextui-org/react";
 import { Edit2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function ListView() {
-  const { data: brands, error, isLoading } = useBrands();
+  const { data: admins, error, isLoading } = useAdmins();
 
   if (isLoading) {
     return (
@@ -25,7 +25,7 @@ export default function ListView() {
 
   return (
     <div className="flex-1 flex flex-col gap-3 md:pr-5 md:px-0 px-5 rounded-xl">
-      <h1 className="text-xl">Brands</h1>
+      <h1 className="text-xl">Admins</h1>
       <table className="border-separate border-spacing-y-3">
         <thead>
           <tr>
@@ -42,7 +42,7 @@ export default function ListView() {
           </tr>
         </thead>
         <tbody>
-          {brands?.map((item, index) => {
+          {admins?.map((item, index) => {
             return <Row index={index} item={item} key={item?.id} />;
           })}
         </tbody>
@@ -59,9 +59,9 @@ function Row({ item, index }) {
     if (!confirm("Are you sure?")) return;
     setIsDeleting(true);
     try {
-      await deleteBrand({ id: item?.id });
+      await deleteAdmin({ id: item?.id });
       toast.success("Successfully Deleted");
-      router.push(`/admin/brands`);
+      router.push(`/admin/admins`);
     } catch (error) {
       toast.error(error?.message);
     }
@@ -69,7 +69,7 @@ function Row({ item, index }) {
   };
 
   const handleUpdate = () => {
-    router.push(`/admin/brands?id=${item?.id}`);
+    router.push(`/admin/admins?id=${item?.id}`);
   };
 
   return (
@@ -79,10 +79,19 @@ function Row({ item, index }) {
       </td>
       <td className="border-y bg-white px-3 py-2 text-center">
         <div className="flex justify-center">
-          <img className="h-10 w-10 object-cover" src={item?.imageURL} alt="" />
+          <img
+            className="h-10 w-10 object-cover rounded-lg"
+            src={item?.imageURL}
+            alt=""
+          />
         </div>
       </td>
-      <td className="border-y bg-white px-3 py-2">{item?.name}</td>
+      <td className="border-y bg-white px-3 py-2">
+        <div>
+          <h2>{item?.name}</h2>
+          <h3 className="text-sm text-gray-600">{item?.email}</h3>
+        </div>
+      </td>
       <td className="border-y bg-white px-3 py-2 border-r rounded-r-lg">
         <div className="flex gap-2 items-center">
           <Button
