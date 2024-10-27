@@ -5,6 +5,7 @@ import {
   doc,
   setDoc,
   Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -28,6 +29,30 @@ export const createNewCategory = async ({ data, image }) => {
     id: newId,
     imageURL: imageUrl,
     timestampCreate: Timestamp.now(),
+  });
+};
+export const updateCategory = async ({ data, image }) => {
+  if (!data.name) {
+    throw new Error("Name is required");
+  }
+  if (!data.slug) {
+    throw new Error("Slug is required");
+  }
+  if (!data?.id) {
+    throw new Error("Id is required");
+  }
+  const id = data?.id;
+  let imageURL = data?.imageURL;
+  if (image) {
+    const imageRef = ref(storage, `categories/${id}`);
+    await uploadBytes(imageRef, image);
+    const imageURL = await getDownloadURL(imageRef);
+  }
+
+  await updateDoc(doc(db, `categories/${id}`), {
+    ...data,
+    imageURL: imageURL,
+    timestampUpdate: Timestamp.now(),
   });
 };
 

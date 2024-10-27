@@ -1,14 +1,44 @@
 "use client";
 
-import { createNewCategory } from "@/lib/firestore/categories/write";
+import { getCategory } from "@/lib/firestore/categories/read_server";
+import {
+  createNewCategory,
+  updateCategory,
+} from "@/lib/firestore/categories/write";
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Form() {
   const [data, setData] = useState(null);
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams(false);
+
+  const router = useRouter();
+
+  const id = searchParams.get("id");
+
+  const fetchData = async () => {
+    try {
+      const res = await getCategory({ id: id });
+
+      if (!res) {
+        toast.error("Category Not Found");
+      } else {
+        setData(res);
+      }
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
 
   const handleData = (key, value) => {
     setData((preData) => {
@@ -26,6 +56,21 @@ export default function Form() {
       toast.success("Category Created Successfully");
       setData(null);
       setImage(null);
+      router.push(`/admin/categories`);
+    } catch (error) {
+      toast.error(error?.message);
+    }
+    setIsLoading(false);
+  };
+
+  const handleUpdate = async () => {
+    setIsLoading(true);
+    try {
+      await updateCategory({ data: data, image: image });
+      toast.success("Category Updated Successfully");
+      setData(null);
+      setImage(null);
+      router.push(`/admin/categories`);
     } catch (error) {
       toast.error(error?.message);
     }
@@ -34,11 +79,15 @@ export default function Form() {
 
   return (
     <div className="flex flex-col gap-3 bg-white rounded-xl p-5">
-      <h1 className="font-semibold">Create Categories</h1>
+      <h1 className="font-semibold">{id ? "Update" : "Create"} Categories</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleCreate();
+          if (id) {
+            handleUpdate();
+          } else {
+            handleCreate();
+          }
         }}
         className="flex flex-col gap-3"
       >
@@ -105,7 +154,7 @@ export default function Form() {
           type="submit"
           color="primary"
         >
-          Create
+          {id ? "Update" : "Create"}
         </Button>
       </form>
     </div>

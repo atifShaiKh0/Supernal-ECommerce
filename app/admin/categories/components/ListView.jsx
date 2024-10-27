@@ -4,10 +4,13 @@ import { useCategories } from "@/lib/firestore/categories/read";
 import { deleteCategory } from "@/lib/firestore/categories/write";
 import { Button, CircularProgress } from "@nextui-org/react";
 import { Edit2, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function ListView() {
+  const router = useRouter();
+
   const { data: categories, error, isLoading } = useCategories();
 
   if (isLoading) {
@@ -52,6 +55,7 @@ export default function ListView() {
 
 function Row({ item, index }) {
   const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
 
   const handleDelete = async () => {
     if (!confirm("Are you sure?")) return;
@@ -59,10 +63,15 @@ function Row({ item, index }) {
     try {
       await deleteCategory({ id: item?.id });
       toast.success("Successfully Deleted");
+      router.push(`/admin/categories`);
     } catch (error) {
       toast.error(error?.message);
     }
     setIsDeleting(false);
+  };
+
+  const handleUpdate = () => {
+    router.push(`/admin/categories?id=${item?.id}`);
   };
 
   return (
@@ -79,7 +88,7 @@ function Row({ item, index }) {
       <td className="border-y bg-white px-3 py-2 border-r rounded-r-lg">
         <div className="flex gap-2 items-center">
           <Button
-            // onClick={handleUpdate}
+            onClick={handleUpdate}
             isDisabled={isDeleting} // delete ho rha to edit pe click nhi ho skta
             isIconOnly
             size="sm"
