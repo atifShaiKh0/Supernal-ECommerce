@@ -37,6 +37,11 @@ export default function Sidebar() {
       icon: <Layers2 className="h-5 w-5" />,
     },
     {
+      name: "Brands",
+      link: "/admin/brands",
+      icon: <Cat className="h-5 w-5" />,
+    },
+    {
       name: "Orders",
       link: "/admin/orders",
       icon: <ShoppingCart className="h-5 w-5" />,
