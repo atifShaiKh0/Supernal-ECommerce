@@ -38,6 +38,9 @@ export default function ListView() {
             <th className="font-semibold border-y bg-white px-3 py-2 text-left">
               Title
             </th>
+            <th className="font-semibold border-y bg-white px-3 py-2 text-left">
+              Products
+            </th>
             <th className="font-semibold border-y bg-white px-3 py-2 border-r rounded-r-lg text-center">
               Actions
             </th>
@@ -85,6 +88,8 @@ function Row({ item, index }) {
         </div>
       </td>
       <td className="border-y bg-white px-3 py-2">{item?.title}</td>
+      <td className="border-y bg-white px-3 py-2">{item?.products?.length}</td>
+
       <td className="border-y bg-white px-3 py-2 border-r rounded-r-lg">
         <div className="flex gap-2 items-center">
           <Button

@@ -14,7 +14,7 @@ export const createNewCollection = async ({ data, image }) => {
     throw new Error("Image is Required");
   }
   if (!data.title) {
-    throw new Error("Name is required");
+    throw new Error("Title is required");
   }
   if (!data?.products || data?.products?.length === 0) {
     throw new Error("Products is required");

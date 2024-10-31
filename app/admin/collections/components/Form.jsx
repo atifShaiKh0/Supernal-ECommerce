@@ -59,6 +59,7 @@ export default function Form() {
       toast.success("Collection Created Successfully");
       setData(null);
       setImage(null);
+
       router.push(`/admin/collections`);
     } catch (error) {
       toast.error(error?.message);
@@ -96,7 +97,7 @@ export default function Form() {
       >
         <div className="flex flex-col gap-1">
           <label htmlFor="category-name" className="text-gray-500 text-sm">
-            Iamge <span className="text-red-800">*</span>
+            Image <span className="text-red-800">*</span>
           </label>
           {image && (
             <div className="flex justify-center items-center">
@@ -128,9 +129,9 @@ export default function Form() {
             name="collection-title"
             type="text"
             placeholder="Enter Title"
-            value={data?.name ?? ""}
+            value={data?.title ?? ""}
             onChange={(e) => {
-              handleData("name", e.target.value);
+              handleData("title", e.target.value);
             }}
             className="border px-4 py-2 rounded-lg w-full focus:outline-none"
           />

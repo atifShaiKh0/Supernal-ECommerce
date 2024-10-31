@@ -79,7 +79,7 @@ function Row({ item, index }) {
       </td>
       <td className="border-y bg-white px-3 py-2 text-center">
         <div className="flex justify-center">
-          <img className="h-10 w-10 object-cover" src={item?.imageURL} alt="" />
+          <img className="h-10 object-cover" src={item?.imageURL} alt="" />
         </div>
       </td>
       <td className="border-y bg-white px-3 py-2">{item?.name}</td>
