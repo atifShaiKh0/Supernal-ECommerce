@@ -49,7 +49,7 @@ export function ProductCard({ product }) {
         </div>
       </div>
       <Link href={`/products/${product?.id}`}>
-        <h1 className="font-semibold line-clamp-2 text-sm">{product?.title}</h1>
+        <h1 className="font-semibold line-clamp-2">{product?.title}</h1>
       </Link>
       <div className="">
         <h2 className="text-green-500 text-sm font-semibold">

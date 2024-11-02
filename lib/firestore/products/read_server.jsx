@@ -12,7 +12,6 @@ import {
 export const getProduct = async ({ id }) => {
   const data = await getDoc(doc(db, `products/${id}`));
   if (data.exists()) {
-    console.log(data.data());
     return data.data();
   } else {
     return null;
@@ -29,6 +28,17 @@ export const getFeaturedProducts = async () => {
 export const getProducts = async () => {
   const list = await getDocs(
     query(collection(db, "products"), orderBy("timestampCreate", "desc"))
+  );
+  return list.docs.map((snap) => snap.data());
+};
+
+export const getProductsByCategory = async ({ categoryId }) => {
+  const list = await getDocs(
+    query(
+      collection(db, "products"),
+      orderBy("timestampCreate", "desc"),
+      where("categoryId", "==", categoryId)
+    )
   );
   return list.docs.map((snap) => snap.data());
 };
