@@ -1,4 +1,15 @@
 import Link from "next/link";
+import {
+  Heart,
+  Search,
+  ShoppingCart,
+  UserCheck2,
+  UserCircle,
+  UserCircle2,
+} from "lucide-react";
+import AuthContextProvider from "@/context/AuthContext";
+import LogoutButton from "./LogoutButton";
+import HeaderClientButtons from "./HeaderClientButtons";
 
 export default function Header() {
   const menuList = [
@@ -32,11 +43,33 @@ export default function Header() {
           );
         })}
       </div>
-      <Link href={"/login"}>
-        <button className="bg-blue-600 px-5 py-2 rounded-full text-white font-bold">
-          Login
-        </button>
-      </Link>
+      <div className="flex items-center gap-1">
+        {/* <AuthContextProvider>
+          <AdminButton />
+        </AuthContextProvider> */}
+        {/* <Link href={`/search`}>
+          <button
+            title="Search Products"
+            className="h-8 w-8 flex justify-center items-center rounded-full hover:bg-gray-50"
+          >
+            <Search size={14} />
+          </button>
+        </Link> */}
+        <AuthContextProvider>
+          <HeaderClientButtons />
+        </AuthContextProvider>
+        <Link href={`/account`}>
+          <button
+            title="My Account"
+            className="h-8 w-8 flex justify-center items-center rounded-full hover:bg-gray-50"
+          >
+            <UserCircle2 size={20} />
+          </button>
+        </Link>
+        <AuthContextProvider>
+          <LogoutButton />
+        </AuthContextProvider>
+      </div>
     </nav>
   );
 }

@@ -3,9 +3,8 @@ import { Button } from "@nextui-org/react";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import Slider from "react-slick";
-// import FavoriteButton from "./FavoriteButton";
-// import AuthContextProvider from "@/contexts/AuthContext";
-// import AddToCartButton from "./AddToCartButton";
+import FavoriteButton from "./FavoriteButton";
+import AuthContextProvider from "@/context/AuthContext";
 
 export default function FeaturedProductSlider({ featuredProducts }) {
   var settings = {
@@ -36,8 +35,8 @@ export default function FeaturedProductSlider({ featuredProducts }) {
                       {product?.shortDescription}
                     </h1>
                   </div>
-                  {/* <AuthContextProvider>
-                    <div className="flex items-center gap-4">
+                  <AuthContextProvider>
+                    {/* <div className="flex items-center gap-4">
                       <Link
                         href={`/checkout?type=buynow&productId=${product?.id}`}
                       >
@@ -45,10 +44,10 @@ export default function FeaturedProductSlider({ featuredProducts }) {
                           BOOK  NOW
                         </button>
                       </Link>
-                      <AddToCartButton productId={product?.id} type={"large"} />
-                      <FavoriteButton productId={product?.id} />
-                    </div>
-                  </AuthContextProvider> */}
+                      <AddToCartButton productId={product?.id} type={"large"} /> */}
+                    <FavoriteButton productId={product?.id} />
+                    {/* </div> */}
+                  </AuthContextProvider>
                 </div>
                 <div className="">
                   <Link href={`/products/${product?.id}`}>

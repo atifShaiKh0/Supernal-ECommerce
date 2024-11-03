@@ -2,6 +2,8 @@ import { Rating } from "@mui/material";
 import { Button } from "@nextui-org/react";
 import { Heart } from "lucide-react";
 import Link from "next/link";
+import FavoriteButton from "./FavoriteButton";
+import AuthContextProvider from "@/context/AuthContext";
 // import FavoriteButton from "./FavoriteButton";
 // import AuthContextProvider from "@/contexts/AuthContext";
 // import AddToCartButton from "./AddToCartButton";
@@ -34,18 +36,9 @@ export function ProductCard({ product }) {
           alt={product?.title}
         />
         <div className="absolute top-1 right-1">
-          {/* <AuthContextProvider> */}
-          {/* <FavoriteButton productId={product?.id} /> */}
-          {/* </AuthContextProvider> */}
-          <Button
-            variant="light"
-            color="danger"
-            className="rounded-full"
-            isIconOnly
-            size="sm"
-          >
-            <Heart size={13} />
-          </Button>
+          <AuthContextProvider>
+            <FavoriteButton productId={product?.id} />
+          </AuthContextProvider>
         </div>
       </div>
       <Link href={`/products/${product?.id}`}>
@@ -86,7 +79,7 @@ export function ProductCard({ product }) {
         <div className="w-full">
           <Link href={`/checkout?type=buynow&productId=${product?.id}`}>
             <button className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg text-xs w-full">
-              Buy Now
+              Book Now
             </button>
           </Link>
         </div>
