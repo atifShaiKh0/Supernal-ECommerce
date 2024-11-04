@@ -4,6 +4,7 @@ import { Heart } from "lucide-react";
 import Link from "next/link";
 import FavoriteButton from "./FavoriteButton";
 import AuthContextProvider from "@/context/AuthContext";
+import AddToCartButton from "./AddToCartButton";
 // import FavoriteButton from "./FavoriteButton";
 // import AuthContextProvider from "@/contexts/AuthContext";
 // import AddToCartButton from "./AddToCartButton";
@@ -83,9 +84,9 @@ export function ProductCard({ product }) {
             </button>
           </Link>
         </div>
-        {/* <AuthContextProvider>
+        <AuthContextProvider>
           <AddToCartButton productId={product?.id} />
-        </AuthContextProvider> */}
+        </AuthContextProvider>
       </div>
     </div>
   );

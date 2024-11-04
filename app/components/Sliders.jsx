@@ -5,6 +5,7 @@ import Link from "next/link";
 import Slider from "react-slick";
 import FavoriteButton from "./FavoriteButton";
 import AuthContextProvider from "@/context/AuthContext";
+import AddToCartButton from "./AddToCartButton";
 
 export default function FeaturedProductSlider({ featuredProducts }) {
   var settings = {
@@ -36,17 +37,17 @@ export default function FeaturedProductSlider({ featuredProducts }) {
                     </h1>
                   </div>
                   <AuthContextProvider>
-                    {/* <div className="flex items-center gap-4">
-                      <Link
+                    <div className="flex items-center gap-4">
+                      {/* <Link
                         href={`/checkout?type=buynow&productId=${product?.id}`}
                       >
                         <button className="bg-blue-500 text-white text-xs md:text-sm px-4 py-1.5 rounded-lg">
                           BOOK  NOW
                         </button>
-                      </Link>
-                      <AddToCartButton productId={product?.id} type={"large"} /> */}
-                    <FavoriteButton productId={product?.id} />
-                    {/* </div> */}
+                      </Link> */}
+                      <AddToCartButton productId={product?.id} type={"large"} />
+                      <FavoriteButton productId={product?.id} />
+                    </div>
                   </AuthContextProvider>
                 </div>
                 <div className="">

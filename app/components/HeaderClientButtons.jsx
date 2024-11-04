@@ -50,7 +50,7 @@ export default function HeaderClientButtons() {
               title="My Cart"
               className="h-8 w-8 flex justify-center items-center rounded-full hover:bg-gray-50"
             >
-              <ShoppingCart className="h-20" />
+              <ShoppingCart size={20} />
             </button>
           </Badge>
         )}
