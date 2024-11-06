@@ -6,7 +6,7 @@ import { ProductCard } from "@/app/components/Products";
 import { getProductsByCategory } from "@/lib/firestore/products/read_server";
 
 export async function generateMetadata({ params }) {
-  const { categoryId } = params;
+  const { categoryId } = await params;
   const category = await getCategory({ id: categoryId });
 
   return {
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const { categoryId } = params;
+  const { categoryId } = await params;
   const category = await getCategory({ id: categoryId });
   const products = await getProductsByCategory({ categoryId: categoryId });
   return (

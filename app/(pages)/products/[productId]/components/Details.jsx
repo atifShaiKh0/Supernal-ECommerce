@@ -10,18 +10,18 @@ import Link from "next/link";
 
 import { getBrand } from "@/lib/firestore/brands/read_server";
 import { getCategory } from "@/lib/firestore/categories/read_server";
+import AuthContextProvider from "@/context/AuthContext";
+import AddToCartButton from "@/app/components/AddToCartButton";
+import FavoriteButton from "@/app/components/FavoriteButton";
 
 export default function Details({ product }) {
   return (
     <div className="w-full flex flex-col gap-3">
       <div className="flex gap-3">
         <Category categoryId={product?.categoryId} />
-        <Brand brandId={product?.brandId} />
       </div>
       <h1 className="font-semibold text-xl md:text-4xl">{product?.title}</h1>
-      {/* <Suspense fallback="Failed To Load">
-        <RatingReview product={product} />
-      </Suspense> */}
+
       <h2 className="text-gray-600 text-sm line-clamp-3 md:line-clamp-4">
         {product?.shortDescription}
       </h2>
@@ -32,17 +32,21 @@ export default function Details({ product }) {
         </span>
       </h3>
       <div className="flex flex-wrap items-center gap-4">
-        {/* <Link href={`/checkout?type=buynow&productId=${product?.id}`}> */}
-        <button className="bg-black text-white rounded-lg px-4 py-1.5">
+        <Link
+          className="bg-blue-600 text-white px-3 py-2 rounded-xl"
+          href={`/checkout-success`}
+        >
           Book Now
-        </button>
-        {/* </Link> */}
-        {/* <AuthContextProvider>
+          {/* <button className="bg-black text-white rounded-lg px-4 py-1.5">
+          Book Now
+        </button> */}
+        </Link>
+        <AuthContextProvider>
           <AddToCartButton type={"cute"} productId={product?.id} />
         </AuthContextProvider>
         <AuthContextProvider>
           <FavoriteButton productId={product?.id} />
-        </AuthContextProvider> */}
+        </AuthContextProvider>
       </div>
       {product?.stock <= (product?.orders ?? 0) && (
         <div className="flex">

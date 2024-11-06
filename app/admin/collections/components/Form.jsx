@@ -195,6 +195,7 @@ export default function Form() {
             {products?.map((item) => {
               return (
                 <option
+                  key={item?.id}
                   disabled={data?.products?.includes(item?.id)} // once a product is selected then it will be disabled
                   value={item?.id}
                 >

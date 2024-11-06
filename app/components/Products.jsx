@@ -1,16 +1,9 @@
 import { Rating } from "@mui/material";
-import { Button } from "@nextui-org/react";
-import { Heart } from "lucide-react";
+
 import Link from "next/link";
 import FavoriteButton from "./FavoriteButton";
 import AuthContextProvider from "@/context/AuthContext";
 import AddToCartButton from "./AddToCartButton";
-// import FavoriteButton from "./FavoriteButton";
-// import AuthContextProvider from "@/contexts/AuthContext";
-// import AddToCartButton from "./AddToCartButton";
-// import { getProductReviewCounts } from "@/lib/firestore/products/count/read";
-// import { Suspense } from "react";
-// import MyRating from "./MyRating";
 
 export default function ProductsGridView({ products }) {
   return (
@@ -18,8 +11,8 @@ export default function ProductsGridView({ products }) {
       <div className="flex flex-col gap-5 max-w-[900px] p-5">
         <h1 className="text-center font-semibold text-lg">Products</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
-          {products?.map((item) => {
-            return <ProductCard product={item} key={item?.id} />;
+          {products?.map((item, index) => {
+            return <ProductCard product={item} key={item?.id || index} />;
           })}
         </div>
       </div>
@@ -60,15 +53,12 @@ export function ProductCard({ product }) {
         <Rating
           size="sm"
           name="product-rating"
-          defaultValue={2.5}
+          defaultValue={4.5}
           precision={0.5}
           readOnly
         />
-        <h1 className="text-sm text-gray-400">(0)</h1>
       </div>
-      {/* <Suspense> */}
-      {/* <RatingReview product={product} /> */}
-      {/* </Suspense> */}
+
       {product?.stock <= (product?.orders ?? 0) && (
         <div className="flex">
           <h3 className="text-red-500 rounded-lg text-xs font-semibold">

@@ -3,7 +3,7 @@ import { getCollection } from "@/lib/firestore/collections/read_server";
 import { getProduct } from "@/lib/firestore/products/read_server";
 
 export async function generateMetadata({ params }) {
-  const { collectionId } = params;
+  const { collectionId } = await params;
   const collection = await getCollection({ id: collectionId });
 
   return {
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const { collectionId } = params;
+  const { collectionId } = await params;
   const collection = await getCollection({ id: collectionId });
   return (
     <main className="flex justify-center p-5 md:px-10 md:py-5 w-full">

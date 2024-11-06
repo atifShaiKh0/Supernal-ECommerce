@@ -13,7 +13,7 @@ export default function Page() {
   const router = useRouter();
   useEffect(() => {
     if (user) {
-      router.push("/account");
+      router.push("/");
     }
   }, [user]);
   return (
